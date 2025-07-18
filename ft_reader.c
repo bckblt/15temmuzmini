@@ -59,7 +59,11 @@ void    ft_cmds(t_list *mini, t_cmd *cmd, char **env)
         if (pid == 0)
         {
             if (cmd->redirections && heredoc_fd == -1)
+            {
                 apply_redirections(cmd->redirections, cmd->fd);
+                if(!cmd->fd->stdout)
+                    exit(0);
+            }
             if (prev_pipe_in != -1)
                 dup2(prev_pipe_in, STDIN_FILENO);
 

@@ -54,7 +54,7 @@ void apply_redirections(char **redirections, t_fd *fds)
             if (fd == -1)
             {
                 fd_closer(file);
-                continue;
+                return ;
             }
             fds->stdout = dup(STDOUT_FILENO);
             dup2(fd, STDOUT_FILENO);
@@ -66,7 +66,7 @@ void apply_redirections(char **redirections, t_fd *fds)
             if (fd == -1)
             {
                 fd_closer(file);
-                continue;
+                return ;
             }
             fds->stdout = dup(STDOUT_FILENO);
             dup2(fd, STDOUT_FILENO);
@@ -78,7 +78,7 @@ void apply_redirections(char **redirections, t_fd *fds)
             if (fd == -1)
             {
                 fd_closer(file);
-                continue;
+                return ;
             }
             fds->stdin = dup(STDIN_FILENO);
             dup2(fd, STDIN_FILENO);
