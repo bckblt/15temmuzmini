@@ -42,7 +42,7 @@ int main(int ac, char **av, char **env)
 		reset_tokens(tokens);
 		tokens = NULL;
 		if(cmd == NULL)
-		continue;
+			continue;
 		ft_builtins(mini, cmd, env);
 	}
 	return (0);

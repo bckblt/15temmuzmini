@@ -56,12 +56,13 @@ void    ft_cmds(t_list *mini, t_cmd *cmd, char **env)
         if (heredoc_ctrl(cmd))
             heredoc_fd = ft_heredoc(cmd->redirections);
         pid_t pid = fork();
+
         if (pid == 0)
         {
             if (cmd->redirections && heredoc_fd == -1)
             {
                 apply_redirections(cmd->redirections, cmd->fd);
-                if(!cmd->fd->stdout)
+                if(cmd->fd->stdout == -1 || cmd->fd->stdin == -1 || cmd->fd->stderr == -1)
                     exit(0);
             }
             if (prev_pipe_in != -1)

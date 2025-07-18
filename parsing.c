@@ -49,7 +49,8 @@ void parse_command(t_cmd **cmd, t_token **tokens)
 		tmp = tmp->next;
 	}
 	(*cmd)->command = ft_calloc(cmd_len + 1, sizeof(char *));
-	(*cmd)->redirections = ft_calloc(redir_len + 1, sizeof(char *));
+	if(redir_len != 0)
+		(*cmd)->redirections = ft_calloc(redir_len + 1, sizeof(char *));
 	int i = 0, j = 0;
 	while (*tokens && strcmp((*tokens)->type, "pipe") != 0) 
 	{
