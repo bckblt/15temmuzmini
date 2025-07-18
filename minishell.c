@@ -44,7 +44,6 @@ int main(int ac, char **av, char **env)
 		if(cmd == NULL)
 		continue;
 		ft_builtins(mini, cmd, env);
-		printf("%d\n", exit_code);
 	}
 	return (0);
 }

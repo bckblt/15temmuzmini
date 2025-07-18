@@ -49,7 +49,7 @@ void apply_redirections(char **redirections, t_fd *fds)
         type = redirections[i];
         file = redirections[i + 1];
 
-        if (strcmp(type, ">") == 0) {
+        if (ft_strcmp(type, ">") == 0) {
             int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
             if (fd == -1)
             {
@@ -60,7 +60,7 @@ void apply_redirections(char **redirections, t_fd *fds)
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if (strcmp(type, ">>") == 0)
+        else if (ft_strcmp(type, ">>") == 0)
         {
             int fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (fd == -1)
@@ -72,7 +72,7 @@ void apply_redirections(char **redirections, t_fd *fds)
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if (strcmp(type, "<") == 0)
+        else if (ft_strcmp(type, "<") == 0)
         {
             int fd = open(file, O_RDONLY);
             if (fd == -1)
@@ -83,17 +83,6 @@ void apply_redirections(char **redirections, t_fd *fds)
             fds->stdin = dup(STDIN_FILENO);
             dup2(fd, STDIN_FILENO);
             close(fd);
-        }
-        else if (strcmp(type, "<<") == 0)
-        {
-            int heredoc_fd = ft_heredoc(redirections + i);
-            if (heredoc_fd == -1) {
-                ft_putstr_fd("minishell: heredoc error\n", STDERR_FILENO);
-                continue;
-            }
-            fds->stdin = dup(STDIN_FILENO);
-            dup2(heredoc_fd, STDIN_FILENO);
-            close(heredoc_fd);
         }
         i += 2;
     }

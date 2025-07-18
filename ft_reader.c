@@ -40,7 +40,7 @@ int heredoc_ctrl(t_cmd *cmd)
 {
     if (!cmd->redirections || !cmd->redirections[0])
         return (0);
-    if (ft_strcmp(cmd->redirections[0], "<<"))
+    if (ft_strcmp(cmd->redirections[0], "<<") == 0)
         return(1);
     return (0);
 }
@@ -48,11 +48,9 @@ void    ft_cmds(t_list *mini, t_cmd *cmd, char **env)
 {
     int prev_pipe_in = -1;
     int pipe_fd[2];
-    int is_builtin;
     int heredoc_fd = -1;
     while (cmd)
     {
-        is_builtin = is_builtin_command(cmd);
         if (cmd->next)
             pipe(pipe_fd);
         if (heredoc_ctrl(cmd))
@@ -68,7 +66,7 @@ void    ft_cmds(t_list *mini, t_cmd *cmd, char **env)
             if (cmd->next)
                 dup2(pipe_fd[1], STDOUT_FILENO);
 
-            if (is_builtin)
+            if (is_builtin_command(cmd))
                 exec_builtin(cmd, mini, env);
             else
                 exec_command(cmd->command, mini->paths, env);
