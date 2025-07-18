@@ -17,3 +17,14 @@
 		unset
 	}
 	dümdüz unset yazınca seg alıyoz
+
+cd komutunudaki hatalar
+
+cd /var/log && ls -l girdisi çıktı üretebilmeli
+-------------------------
+export komutundaki hatalar
+
+export VAR1="hello" VAR2="world"; export -p | grep VAR
+------------------------
+tr -cs 'A-Za-z' '[\n*]' < largefile.txt | tr 'A-Z' 'a-z' | sort | uniq -c | sort -nr | head -n 10 >> top_words.txt
+bu girdide hata var çalışmıyor direkt ben tokendan kaynaklı olduğunu düşünüyorum

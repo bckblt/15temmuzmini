@@ -49,7 +49,7 @@ typedef struct s_cmd
 	struct s_fd *fd;
 } t_cmd;
 
-
+int    ft_heredoc(char **redirections);
 void retfd(t_cmd *cmd);
 void apply_redirections(char **redirections, t_fd *fds);
 int     node_c(t_cmd *node);
@@ -81,6 +81,6 @@ void	exec_command(char **args, char **paths, char **env);
 char	*get_full_path(char *cmd, char **paths);
 void    get_pid_echo();
 void    ft_env(char **env, char **cmds);
-int is_builtin_command(char *cmd);
+int is_builtin_command(t_cmd *cmd);
 
 #endif

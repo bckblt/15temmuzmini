@@ -54,7 +54,7 @@ void    ft_exit_chk(t_list *mini, char *input)
 		free(mini);
 		exit(0);
 	}
-	if (!ft_strncmp(input, "exit", 4) && (input[4] == ' ' || input[4] == '\0'))
+	if (!ft_strcmp(input, "exit") && (input[4] == ' ' || input[4] == '\0'))
 	{
 		exit_res = exit_with_arg(input);
 		if(exit_res != 1)

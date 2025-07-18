@@ -19,45 +19,52 @@ void retfd(t_cmd *cmd)
 
 void exec_builtin(t_cmd *cmd, t_list *mini, char **env)
 {
-    if (ft_strncmp(cmd->command[0], "cd", 2) == 0)
+    if (ft_strcmp(cmd->command[0], "cd") == 0)
         ft_cd(cmd->command);
-    else if (ft_strncmp(cmd->command[0], "echo", 4) == 0)
+    else if (ft_strcmp(cmd->command[0], "echo") == 0)
         ft_echo(cmd, cmd->quote_num, mini->input);
-    else if (ft_strncmp(cmd->command[0], "pwd", 3) == 0)
+    else if (ft_strcmp(cmd->command[0], "pwd") == 0)
         ft_pwd();
-    else if (ft_strncmp(cmd->command[0], "export", 6) == 0)
+    else if (ft_strcmp(cmd->command[0], "export") == 0)
         ft_exp(env, cmd);
-    else if (ft_strncmp(cmd->command[0], "unset", 5) == 0)
+    else if (ft_strcmp(cmd->command[0], "unset") == 0)
         ft_unset(env, cmd->command[1]);
-    else if (ft_strncmp(cmd->command[0], "env", 3) == 0)
+    else if (ft_strcmp(cmd->command[0], "env") == 0)
         ft_env(env, cmd->command);
+
     if(cmd->next)
         retfd(cmd);
     exit(0);
 }
-
+int heredoc_ctrl(t_cmd *cmd)
+{
+    if (!cmd->redirections || !cmd->redirections[0])
+        return (0);
+    if (ft_strcmp(cmd->redirections[0], "<<"))
+        return(1);
+    return (0);
+}
 void    ft_cmds(t_list *mini, t_cmd *cmd, char **env)
 {
     int prev_pipe_in = -1;
     int pipe_fd[2];
     int is_builtin;
-
+    int heredoc_fd = -1;
     while (cmd)
     {
-        is_builtin = is_builtin_command(cmd->command[0]);
-        
+        is_builtin = is_builtin_command(cmd);
         if (cmd->next)
             pipe(pipe_fd);
-
+        if (heredoc_ctrl(cmd))
+            heredoc_fd = ft_heredoc(cmd->redirections);
         pid_t pid = fork();
         if (pid == 0)
         {
-            if (cmd->redirections)
+            if (cmd->redirections && heredoc_fd == -1)
                 apply_redirections(cmd->redirections, cmd->fd);
-            
             if (prev_pipe_in != -1)
                 dup2(prev_pipe_in, STDIN_FILENO);
-            
+
             if (cmd->next)
                 dup2(pipe_fd[1], STDOUT_FILENO);
 

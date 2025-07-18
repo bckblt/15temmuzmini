@@ -6,7 +6,7 @@
 /*   By: bakarabu <bakarabu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 04:53:21 by bakarabu          #+#    #+#             */
-/*   Updated: 2024/12/06 19:22:44 by bakarabu         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:46:29 by bakarabu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*str;
 
-	if (fd < 0 || 1 <= 0)
+	if (fd <= 0)
 		return (0);
 	str = ft_read (fd, str);
 	if (!str)

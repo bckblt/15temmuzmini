@@ -70,15 +70,15 @@ char *get_full_path(char *cmd, char **paths)
 	return NULL;
 }
 
-int is_builtin_command(char *cmd)
+int is_builtin_command(t_cmd *cmd)
 {
     if (!cmd)
         return 0;
         
-    return (ft_strncmp(cmd, "cd", 2) == 0 ||
-            ft_strncmp(cmd, "echo", 4) == 0 ||
-            ft_strncmp(cmd, "pwd", 3) == 0 ||
-            ft_strncmp(cmd, "export", 6) == 0 ||
-            ft_strncmp(cmd, "unset", 5) == 0 ||
-            ft_strncmp(cmd, "env", 3) == 0);
+    return (ft_strncmp(cmd->command[0], "cd", 2) == 0 ||
+            ft_strncmp(cmd->command[0], "echo", 4) == 0 ||
+            ft_strncmp(cmd->command[0], "pwd", 3) == 0 ||
+            ft_strncmp(cmd->command[0], "export", 6) == 0 ||
+            ft_strncmp(cmd->command[0], "unset", 5) == 0 ||
+            ft_strncmp(cmd->command[0], "env", 3) == 0);
 }

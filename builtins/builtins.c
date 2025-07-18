@@ -131,32 +131,32 @@ int ft_unset(char **env, char *var_name)
 
 void ft_builtins(t_list *mini, t_cmd *cmds, char **env)
 {
-    int is_builtin = is_builtin_command(cmds->command[0]);
-    
-    if (is_builtin)
+    int is_builtin = is_builtin_command(cmds);
+    if (cmds->next)
+		ft_cmds(mini, cmds, env);
+    else if (is_builtin)
     {
         if (cmds->redirections)
             apply_redirections(cmds->redirections, cmds->fd);
-        if(ft_strncmp(cmds->command[0], "exit", 4) == 0)
+        if(ft_strcmp(cmds->command[0], "exit") == 0)
             return;
-        if (ft_strncmp(cmds->command[0], "echo", 4) == 0)
+        if (ft_strcmp(cmds->command[0], "echo") == 0)
             ft_echo(cmds, cmds->quote_num, mini->input);
-        if (ft_strncmp(cmds->command[0], "pwd", 3) == 0)
+        if (ft_strcmp(cmds->command[0], "pwd") == 0)
             ft_pwd();
-        if (ft_strncmp(cmds->command[0], "cd", 2) == 0)
+        if (ft_strcmp(cmds->command[0], "cd") == 0)
             ft_cd(cmds->command);
-        if (ft_strncmp(cmds->command[0], "export", 6) == 0)
+        if (ft_strcmp(cmds->command[0], "export") == 0)
             ft_exp(env, cmds);
-        if (ft_strncmp(cmds->command[0], "unset", 5) == 0)
+        if (ft_strcmp(cmds->command[0], "unset") == 0)
             ft_unset(env, cmds->command[1]);
-        if (ft_strncmp(cmds->command[0], "env", 3) == 0)
+        if (ft_strcmp(cmds->command[0], "env") == 0)
             ft_env(env, cmds->command);
-        
         if (cmds->redirections)
             retfd(cmds);
         
         return;
     }
-    
-    ft_cmds(mini, cmds, env);
+	else
+    	ft_cmds(mini, cmds, env);
 }
